@@ -23,7 +23,7 @@ A bridge between Postgres and RabbitMQ writing on GO
 
 4. Run your app
     ```
-    ./postrabbit run
+    ./postrabbit
     ```
 
 ## Environment Variables
