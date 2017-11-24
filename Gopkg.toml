@@ -36,7 +36,3 @@
 [[constraint]]
   branch = "master"
   name = "github.com/streadway/amqp"
-
-[[constraint]]
-  name = "gopkg.in/alecthomas/kingpin.v2"
-  version = "2.2.5"
