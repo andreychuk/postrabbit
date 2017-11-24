@@ -6,7 +6,6 @@ import (
 
 	pq "github.com/lib/pq"
 	"github.com/streadway/amqp"
-	"postrabbit/config"
 	"strings"
 	"github.com/pquerna/ffjson/ffjson"
 )
@@ -17,7 +16,7 @@ func errorReporter(ev pq.ListenerEventType, err error) {
 	}
 }
 
-func run(conf config.Config) {
+func run(conf Config) {
 	listener := pq.NewListener(conf.POSTGRES_URL, 10*time.Second, time.Minute, errorReporter)
 	channels := parseChannelList(conf.CHANNEL_LIST)
 
