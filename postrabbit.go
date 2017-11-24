@@ -5,8 +5,13 @@ import (
 
 	"gopkg.in/alecthomas/kingpin.v2"
 	"github.com/caarlos0/env"
-	"postrabbit/config"
 )
+
+type Config struct {
+	CHANNEL_LIST string `env:"CHANNEL_LIST"`
+	POSTGRES_URL string `env:"POSTGRES_URL"`
+	RABBITMQ_URL string `env:"RABBITMQ_URL"`
+}
 
 var (
 	app          = kingpin.New("postrabbit", "A PostgreSQL/RabbitMQ Bridge")
@@ -14,7 +19,7 @@ var (
 )
 
 func main() {
-	conf := config.Config{}
+	conf := Config{}
 	env.Parse(&conf)
 
 	switch kingpin.MustParse(app.Parse(os.Args[1:])) {
