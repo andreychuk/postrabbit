@@ -14,4 +14,4 @@ ENV POSTGRES_URL="postgres://user:pass@postgresql:5432/test?sslmode=disable" \
     RABBITMQ_URL="amqp://admin:pass@rabbitmq:5672" \
     CHANNEL_LIST="test,test1,test2"
 RUN apk --no-cache add ca-certificates
-CMD [ "./postrabbit", "run" ]
+CMD [ "./postrabbit" ]
