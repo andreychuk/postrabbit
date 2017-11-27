@@ -31,24 +31,24 @@ func run(conf Config) {
 	rabbitChannel := make(chan pq.Notification, 100)
 
 	go func() {
-		conn, err := amqp.Dial(conf.RABBITMQ_URL)
-
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer conn.Close()
-
-		ch, err := conn.Channel()
-
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer ch.Close()
-
 		for {
+			conn, err := amqp.Dial(conf.RABBITMQ_URL)
+
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer conn.Close()
+
+			ch, err := conn.Channel()
+
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer ch.Close()
+
 			var msg Message
 			notification := <-rabbitChannel
-			err := ffjson.Unmarshal([]byte(notification.Extra), &msg)
+			err = ffjson.Unmarshal([]byte(notification.Extra), &msg)
 			msg.Channel = notification.Channel
 			msg.Data = notification.Extra
 			if err != nil {
