@@ -28,7 +28,7 @@ func run(conf Config) {
 		log.Printf("[LISTENER] Start to listen channel %s\n", ch)
 	}
 
-	rabbitChannel := make(chan string, 100)
+	rabbitChannel := make(chan pq.Notification, 100)
 
 	go func() {
 		conn, err := amqp.Dial(conf.RABBITMQ_URL)
@@ -47,8 +47,10 @@ func run(conf Config) {
 
 		for {
 			var msg Message
-			payload := <-rabbitChannel
-			err := ffjson.Unmarshal([]byte(payload), &msg)
+			notification := <-rabbitChannel
+			err := ffjson.Unmarshal([]byte(notification.Extra), &msg)
+			msg.Channel = notification.Channel
+			msg.Data = notification.Extra
 			if err != nil {
 				log.Println(err)
 			} else {
@@ -75,7 +77,7 @@ func run(conf Config) {
 	for {
 		select {
 		case notification := <-listener.Notify:
-			rabbitChannel <- notification.Extra
+			rabbitChannel <- *notification
 		case <-time.After(90 * time.Second):
 			go func() {
 				err := listener.Ping()
