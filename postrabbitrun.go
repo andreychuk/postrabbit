@@ -31,14 +31,14 @@ func run(conf Config) {
 	rabbitChannel := make(chan pq.Notification, 100)
 
 	go func() {
+		conn, err := amqp.Dial(conf.RABBITMQ_URL)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer conn.Close()
+
 		for {
-			conn, err := amqp.Dial(conf.RABBITMQ_URL)
-
-			if err != nil {
-				log.Fatal(err)
-			}
-			defer conn.Close()
-
 			ch, err := conn.Channel()
 
 			if err != nil {
