@@ -50,6 +50,4 @@ func (msg *Message) toString() string {
 		)
 	}
 
-
-
 }

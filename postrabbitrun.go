@@ -4,10 +4,10 @@ import (
 	"log"
 	"time"
 
-	pq "github.com/lib/pq"
+	"github.com/lib/pq"
+	"github.com/pquerna/ffjson/ffjson"
 	"github.com/streadway/amqp"
 	"strings"
-	"github.com/pquerna/ffjson/ffjson"
 )
 
 func errorReporter(ev pq.ListenerEventType, err error) {
@@ -62,7 +62,7 @@ func run(conf Config) {
 				err := ch.Publish(msg.getChannel(), "", false, false, amqp.Publishing{
 					ContentType: "text/plain",
 					Body:        []byte(msg.getData()),
-					Headers:	 headers,
+					Headers:     headers,
 				})
 				if err != nil {
 					log.Fatal(err)
@@ -90,7 +90,7 @@ func run(conf Config) {
 
 }
 
-func parseChannelList(list string) ([]string) {
+func parseChannelList(list string) []string {
 	channels := strings.Split(list, ",")
 	return channels
 }
