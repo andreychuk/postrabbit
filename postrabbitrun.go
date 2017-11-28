@@ -51,6 +51,7 @@ func run(conf Config) {
 			err = ffjson.Unmarshal([]byte(notification.Extra), &msg)
 			msg.Channel = notification.Channel
 			msg.Data = notification.Extra
+			msg.Exchange = conf.DEFAULT_EXCHANGE_NAME
 			if err != nil {
 				log.Println(err)
 			} else {
@@ -58,8 +59,9 @@ func run(conf Config) {
 				if msg.isDelay() == true {
 					// Delay messages
 					headers["x-delay"] = msg.getDelay()
+					msg.Exchange = conf.DELAY_EXCHANGE_NAME
 				}
-				err := ch.Publish(msg.getChannel(), "", false, false, amqp.Publishing{
+				err := ch.Publish(msg.getExchange(), "", false, false, amqp.Publishing{
 					ContentType: "text/plain",
 					Body:        []byte(msg.getData()),
 					Headers:     headers,
