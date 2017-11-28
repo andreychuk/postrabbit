@@ -10,39 +10,17 @@ import (
 	"strings"
 )
 
-func errorReporter(ev pq.ListenerEventType, err error) {
-	if err != nil {
-		log.Print(err)
-	}
-}
-
-func run(conf Config) {
-	listener := pq.NewListener(conf.POSTGRES_URL, 10*time.Second, time.Minute, errorReporter)
-	channels := parseChannelList(conf.CHANNEL_LIST)
-
-	for _, ch := range channels {
-		err := listener.Listen(ch)
-		if err != nil {
-			log.Fatal(err)
-		}
-		log.Printf("[LISTENER] Start to listen channel %s\n", ch)
-	}
-
+func run() {
 	rabbitChannel := make(chan pq.Notification, 100)
 
 	go func() {
-		conn, err := amqp.Dial(conf.RABBITMQ_URL)
-
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer conn.Close()
+		defer AmqpConnection.Close()
 
 		for {
-			ch, err := conn.Channel()
+			ch, err := AmqpConnection.Channel()
 
 			if err != nil {
-				log.Fatal(err)
+				log.Fatalf("[CHANNEL ERROR] %s\n", err.Error())
 			}
 			defer ch.Close()
 
@@ -51,23 +29,23 @@ func run(conf Config) {
 			err = ffjson.Unmarshal([]byte(notification.Extra), &msg)
 			msg.Channel = notification.Channel
 			msg.Data = notification.Extra
-			msg.Exchange = conf.DEFAULT_EXCHANGE_NAME
+			msg.Exchange = Conf.DEFAULT_EXCHANGE_NAME
 			if err != nil {
-				log.Println(err)
+				log.Printf("[JOSN ERROR] %s\n", err.Error())
 			} else {
 				headers := make(map[string]interface{})
 				if msg.isDelay() == true {
 					// Delay messages
 					headers["x-delay"] = msg.getDelay()
-					msg.Exchange = conf.DELAY_EXCHANGE_NAME
+					msg.Exchange = Conf.DELAY_EXCHANGE_NAME
 				}
 				err := ch.Publish(msg.getExchange(), msg.getChannel(), false, false, amqp.Publishing{
-					ContentType: "text/plain",
+					ContentType: "application/json",
 					Body:        []byte(msg.getData()),
 					Headers:     headers,
 				})
 				if err != nil {
-					log.Fatal(err)
+					log.Fatalf("[PUBLISH ERROR] %s\n", err.Error())
 				}
 				log.Printf(msg.toString())
 			}
@@ -78,13 +56,13 @@ func run(conf Config) {
 
 	for {
 		select {
-		case notification := <-listener.Notify:
+		case notification := <-Listener.Notify:
 			rabbitChannel <- *notification
 		case <-time.After(90 * time.Second):
 			go func() {
-				err := listener.Ping()
+				err := Listener.Ping()
 				if err != nil {
-					log.Fatal(err)
+					log.Fatalf("[LISTENER PING ERROR] %s\n", err.Error())
 				}
 			}()
 		}
