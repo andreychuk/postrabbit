@@ -4,9 +4,10 @@ import "fmt"
 
 type (
 	Message struct {
-		Channel string
-		Delay   int64
-		Data    string
+		Channel  string
+		Delay    int64
+		Data     string
+		Exchange string
 	}
 )
 
@@ -50,4 +51,7 @@ func (msg *Message) toString() string {
 		)
 	}
 
+}
+func (msg *Message) getExchange() string {
+	return msg.Exchange
 }
