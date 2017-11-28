@@ -38,17 +38,17 @@ func run(conf Config) {
 		}
 		defer conn.Close()
 
-		ch, err := conn.Channel()
-
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer ch.Close()
-
 		for {
+			ch, err := conn.Channel()
+
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer ch.Close()
+
 			var msg Message
 			notification := <-rabbitChannel
-			err := ffjson.Unmarshal([]byte(notification.Extra), &msg)
+			err = ffjson.Unmarshal([]byte(notification.Extra), &msg)
 			msg.Channel = notification.Channel
 			msg.Data = notification.Extra
 			if err != nil {
