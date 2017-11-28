@@ -61,7 +61,7 @@ func run(conf Config) {
 					headers["x-delay"] = msg.getDelay()
 					msg.Exchange = conf.DELAY_EXCHANGE_NAME
 				}
-				err := ch.Publish(msg.getExchange(), "", false, false, amqp.Publishing{
+				err := ch.Publish(msg.getExchange(), msg.getChannel(), false, false, amqp.Publishing{
 					ContentType: "text/plain",
 					Body:        []byte(msg.getData()),
 					Headers:     headers,
