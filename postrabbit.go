@@ -32,10 +32,10 @@ func initRabbitConn(conf Config) *amqp.Connection {
 	for ; ; <-ticker.C {
 		conn, err := amqp.Dial(conf.RABBITMQ_URL)
 		if err != nil {
-			log.Printf("[RABBIR CONNECTION] %s\n", err.Error())
+			log.Printf("[RABBIT CONNECTION] %s\n", err.Error())
 			log.Println(
-				"[RABBIR CONNECTION] node will only be able to respond to local connections")
-			log.Println("[RABBIR CONNECTION] trying to reconnect in 5 seconds...")
+				"[RABBIT CONNECTION] node will only be able to respond to local connections")
+			log.Println("[RABBIT CONNECTION] trying to reconnect in 5 seconds...")
 			continue
 		}
 		return conn
@@ -67,7 +67,7 @@ func initNewListener(conf Config) *pq.Listener {
 		if err != nil {
 			log.Printf("[PQ CONNECTION] %s\n", err.Error())
 			log.Println("[PQ CONNECTION] node will only be able to respond to local connections")
-			log.Println("[RABBIR CONNECTION] trying to reconnect in 5 seconds...")
+			log.Println("[RABBIT CONNECTION] trying to reconnect in 5 seconds...")
 			continue
 		}
 		return listener
