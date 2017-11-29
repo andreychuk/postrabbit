@@ -1,0 +1,5 @@
+before_install:
+  - ./example/run.sh
+
+script:
+  - ./example/test.sh
