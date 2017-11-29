@@ -38,14 +38,16 @@ func (msg *Message) getData() string {
 func (msg *Message) toString() string {
 	if msg.isDelay() == true {
 		return fmt.Sprintf(
-			"[DELAY MESSAGE] ch: %s, scheduled to: %d ms, data: %s\n",
+			"[DELAY MESSAGE] ex: %s, ch: %s, scheduled to: %d ms, data: %s\n",
+			msg.getExchange(),
 			msg.getChannel(),
 			msg.getDelay(),
 			msg.getData(),
 		)
 	} else {
 		return fmt.Sprintf(
-			"[SIMPLE MESSAGE] ch: %s, data: %s\n",
+			"[SIMPLE MESSAGE] ex: %s, ch: %s, data: %s\n",
+			msg.getExchange(),
 			msg.getChannel(),
 			msg.getData(),
 		)
