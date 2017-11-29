@@ -31,6 +31,8 @@ A bridge between Postgres and RabbitMQ writing on GO
     CHANNEL_LIST - tets,test1,test2
     RABBITMQ_URL - RabbitMQ url
     POSTGRES_URL - Postgres url
+    DEFAULT_EXCHANGE_NAME - exchange name for simple messages
+    DELAY_EXCHANGE_NAME - exchange name for delay messages
 
 ## License
 
