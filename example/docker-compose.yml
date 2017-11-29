@@ -1,0 +1,31 @@
+version: "2.1"
+services:
+
+  postgresql:
+    image: postgres:9.6.5-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  rabbitmq:
+    build: ./rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
+
+  postrabbit:
+    build: ../
+    environment:
+      - CHANNEL_LIST=${CHANNEL_LIST}
+      - POSTGRES_URL=${POSTGRES_URL}
+      - RABBITMQ_URL=${RABBITMQ_URL}
+      - DEFAULT_EXCHANGE_NAME=${DEFAULT_EXCHANGE_NAME}
+      - DELAY_EXCHANGE_NAME=${DELAY_EXCHANGE_NAME}
+    restart: always
