@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Export variables from .env file
-source ./.env
+source .env
 export $(cut -d= -f1 ./.env)
 
 # docker-compose -f docker-compose.yml stop
