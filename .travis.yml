@@ -32,6 +32,6 @@ before_install:
 
   - cd example
 
-  - run.sh
+  - ./run.sh
 
-  - test.sh
+  - ./test.sh
