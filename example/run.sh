@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 # Export variables from .env file
-# source ./.env
-# export $(cut -d= -f1 ./.env)
+source ./.env
+export $(cut -d= -f1 ./.env)
 
-# docker-compose -f docker-compose.yml stop
-# docker-compose -f docker-compose.yml rm -f
-# docker volume ls -q | xargs docker volume rm
-docker-compose up --build -d
+docker-compose -f docker-compose.yml stop
+docker-compose -f docker-compose.yml rm -f
+docker volume ls -q | xargs docker volume rm
+docker-compose -f docker-compose.yml up --build -d
 
 sleep 3
 docker exec -it example_rabbitmq_1 rabbitmqctl wait /var/lib/rabbitmq/mnesia/rabbit@rabbitmq.pid
@@ -20,4 +20,4 @@ docker exec -it example_rabbitmq_1 rabbitmqadmin declare binding routing_key=my-
 docker exec -it example_rabbitmq_1 rabbitmqadmin declare queue name=my-channel durable=false
 docker exec -it example_rabbitmq_1 rabbitmqadmin declare binding routing_key=my-channel source=${DEFAULT_EXCHANGE_NAME} destination=my-channel
 
- #docker-compose -f docker-compose.yml logs -tf
+# docker-compose -f docker-compose.yml logs -tf
