@@ -38,6 +38,7 @@ func initRabbitConn(conf Config) *amqp.Connection {
 			log.Println("[RABBIT CONNECTION] trying to reconnect in 5 seconds...")
 			continue
 		}
+		log.Println("[RABBIT CONNECTION] DONE!!!")
 		return conn
 	}
 }
@@ -67,9 +68,10 @@ func initNewListener(conf Config) *pq.Listener {
 		if err != nil {
 			log.Printf("[PQ CONNECTION] %s\n", err.Error())
 			log.Println("[PQ CONNECTION] node will only be able to respond to local connections")
-			log.Println("[RABBIT CONNECTION] trying to reconnect in 5 seconds...")
+			log.Println("[PQ CONNECTION] trying to reconnect in 5 seconds...")
 			continue
 		}
+		log.Println("[PQ CONNECTION] DONE!!!")
 		return listener
 	}
 }
