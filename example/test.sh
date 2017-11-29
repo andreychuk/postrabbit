@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # Export variables from .env file
-source ./.env
-export $(cut -d= -f1 ./.env)
+# source ./.env
+# export $(cut -d= -f1 ./.env)
 
 export OLD_CHANNEL_COUNT=$(docker exec -it example_rabbitmq_1 rabbitmqctl list_queues | grep 'my-channel' | awk 'NR >= 1 {print $2}' | sed 's/[^0-9]*//g')
 export OLD_CHANNEL_DELAYED_COUNT=$(docker exec -it example_rabbitmq_1 rabbitmqctl list_queues | grep 'my-delayed-channel' | awk 'NR >= 1 {print $2}' | sed 's/[^0-9]*//g')
