@@ -30,8 +30,9 @@ before_install:
 
   - cd example
 
-  - ./run.sh
-
 script:
 
+  - ./run.sh
+
   - ./test.sh
+
