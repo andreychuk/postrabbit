@@ -29,8 +29,8 @@ echo "OLD_CHANNEL_DELAYED_COUNT: $OLD_CHANNEL_DELAYED_COUNT"
 echo "EXPECTED_CHANNEL_DELAYED_COUNT: $EXPECTED_CHANNEL_DELAYED_COUNT"
 echo "NEW_CHANNEL_DELAYED_COUNT: $NEW_CHANNEL_DELAYED_COUNT"
 if [ "$EXPECTED_CHANNEL_DELAYED_COUNT" != "$NEW_CHANNEL_DELAYED_COUNT" ]; then
+    docker-compose -f docker-compose.yml logs
     exit 1
 fi
 
-docker-compose -f docker-compose.yml logs
 exit 0
