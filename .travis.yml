@@ -10,7 +10,7 @@ env:
     - POSTGRES_USER=user
     - POSTGRES_PASSWORD=pass
     - CHANNEL_LIST=my-channel,my-delayed-channel
-    - POSTGRES_URL=postgres://user:pass@postgresql/postgres:54321?sslmode=disable
+    - POSTGRES_URL=postgres://user:pass@postgresql/postgres?sslmode=disable
     - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
     - DEFAULT_EXCHANGE_NAME=default
     - DELAY_EXCHANGE_NAME=delay

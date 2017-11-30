@@ -20,4 +20,4 @@ docker exec -it example_rabbitmq_1 rabbitmqadmin declare binding routing_key=my-
 docker exec -it example_rabbitmq_1 rabbitmqadmin declare queue name=my-channel durable=false
 docker exec -it example_rabbitmq_1 rabbitmqadmin declare binding routing_key=my-channel source=${DEFAULT_EXCHANGE_NAME} destination=my-channel
 
-# docker-compose -f docker-compose.yml logs -tf
+#docker-compose -f docker-compose.yml logs -tf
