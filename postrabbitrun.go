@@ -36,6 +36,9 @@ func run() {
 				headers := make(map[string]interface{})
 				if msg.isDelay() == true {
 					// Delay messages
+					if msg.getDelay() <= 0 {
+						continue
+					}
 					headers["x-delay"] = msg.getDelay()
 					msg.Exchange = Conf.DELAY_EXCHANGE_NAME
 				}

@@ -11,6 +11,7 @@ docker exec -it example_postgresql_1 psql -U postgres -c "SELECT pg_notify('not-
 docker exec -it example_postgresql_1 psql -U postgres -c "SELECT pg_notify('my-channel', '{\"variable\": \"value\"}');"
 docker exec -it example_postgresql_1 psql -U postgres -c "SELECT pg_notify('my-channel', '{}');" #Empty payload
 docker exec -it example_postgresql_1 psql -U postgres -c "SELECT pg_notify('my-delayed-channel', '{\"variable\": \"value\", \"delay\": 1}');"
+docker exec -it example_postgresql_1 psql -U postgres -c "SELECT pg_notify('my-delayed-channel', '{\"variable\": \"value\", \"delay\": -1}');"
 
 export NEW_CHANNEL_COUNT=$(docker exec -it example_rabbitmq_1 rabbitmqctl list_queues | grep 'my-channel' | awk 'NR >= 1 {print $2} '  | sed 's/[^0-9]*//g')
 export NEW_CHANNEL_DELAYED_COUNT=$(docker exec -it example_rabbitmq_1 rabbitmqctl list_queues | grep 'my-delayed-channel' | awk 'NR >= 1 {print $2}'  | sed 's/[^0-9]*//g')
