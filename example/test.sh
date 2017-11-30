@@ -32,4 +32,5 @@ if [ "$EXPECTED_CHANNEL_DELAYED_COUNT" != "$NEW_CHANNEL_DELAYED_COUNT" ]; then
     exit 1
 fi
 
+docker-compose -f docker-compose.yml logs
 exit 0
