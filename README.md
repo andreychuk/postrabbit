@@ -6,6 +6,8 @@
 
 A bridge between Postgres and RabbitMQ writing on GO
 
+https://travis-ci.org/andreychuk/postrabbit.svg?branch=master
+
 ## Getting Started
 
 1. Make sure you have [GO](https://golang.org) and [DEP](https://github.com/golang/dep) installed.
