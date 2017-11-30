@@ -3,8 +3,6 @@ services:
 
   postgresql:
     image: postgres:9.6.5-alpine
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
