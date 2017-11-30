@@ -1,3 +1,6 @@
+language:
+  go
+
 env:
   global:
     - COMPOSE_PROJECT_NAME=example
