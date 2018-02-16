@@ -4,7 +4,7 @@
 
 ## About
 
-A bridge between Postgres and RabbitMQ writing on GO [![Build Status](https://travis-ci.org/andreychuk/postrabbit.svg?branch=master)](https://travis-ci.org/andreychuk/postrabbit)
+A bridge between Postgres and RabbitMQ written on GO [![Build Status](https://travis-ci.org/andreychuk/postrabbit.svg?branch=master)](https://travis-ci.org/andreychuk/postrabbit)
 [![Go Report Card](https://goreportcard.com/badge/github.com/andreychuk/postrabbit)](https://goreportcard.com/report/github.com/andreychuk/postrabbit)
 
 
