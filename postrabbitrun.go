@@ -15,15 +15,14 @@ func run() {
 
 	go func() {
 		defer AmqpConnection.Close()
+		ch, err := AmqpConnection.Channel()
+
+		if err != nil {
+			log.Fatalf("[CHANNEL ERROR] %s\n", err.Error())
+		}
+		defer ch.Close()
 
 		for {
-			ch, err := AmqpConnection.Channel()
-
-			if err != nil {
-				log.Fatalf("[CHANNEL ERROR] %s\n", err.Error())
-			}
-			defer ch.Close()
-
 			var msg Message
 			notification := <-rabbitChannel
 			err = ffjson.Unmarshal([]byte(notification.Extra), &msg)
