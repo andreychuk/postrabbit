@@ -16,7 +16,7 @@ docker exec -it example_postgresql_1 psql -U postgres -c "SELECT pg_notify('my-d
 export NEW_CHANNEL_COUNT=$(docker exec -it example_rabbitmq_1 rabbitmqctl list_queues | grep 'my-channel' | awk 'NR >= 1 {print $2} '  | sed 's/[^0-9]*//g')
 export NEW_CHANNEL_DELAYED_COUNT=$(docker exec -it example_rabbitmq_1 rabbitmqctl list_queues | grep 'my-delayed-channel' | awk 'NR >= 1 {print $2}'  | sed 's/[^0-9]*//g')
 
-export EXPECTED_CHANNEL_COUNT=$(($OLD_CHANNEL_COUNT + 2))
+export EXPECTED_CHANNEL_COUNT=$(($OLD_CHANNEL_COUNT + 1))
 export EXPECTED_CHANNEL_DELAYED_COUNT=$(($OLD_CHANNEL_DELAYED_COUNT + 1))
 
 echo "OLD_CHANNEL_COUNT: $OLD_CHANNEL_COUNT"
